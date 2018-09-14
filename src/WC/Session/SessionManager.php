@@ -1,6 +1,6 @@
 <?php
 
-namespace Session;
+namespace WCM\Session;
 
 use Database\Driver;
 use WC\Models\ListModel;
