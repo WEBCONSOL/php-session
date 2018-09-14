@@ -1,0 +1,24 @@
+{
+    "name": "webconsol/php-session",
+    "version": "1.0.0",
+    "description": "WEBCONSOL for PHP Session",
+    "type": "library",
+    "keywords": ["session"],
+    "homepage": "https://github.com/WEBCONSOL/php-session",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sothea Nim",
+            "email": "sothea.nim@webconsol.com",
+            "homepage": "https://www.webconsol.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.0"
+    },
+    "autoload": {
+        "psr-0" : {
+            "WC\\Session\\" : "src/"
+        }
+    }
+}
