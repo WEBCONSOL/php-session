@@ -40,7 +40,7 @@ class SessionManager
     private $db = false;
 
     /**
-     * PhpSessionManager constructor.
+     * SessionManager constructor.
      *
      * @param Driver $em
      * @param string $id
@@ -81,7 +81,14 @@ class SessionManager
                 return $this->session;
             }
         }
-        return isset($_SESSION) && is_array($_SESSION) ? $_SESSION : array();
+        else {
+            $session = isset($_SESSION) ? $_SESSION : array();
+            foreach ($session as $key=>$value) {
+                $session[$key] = $this->get($key);
+            }
+            return $session;
+        }
+        return array();
     }
 
     /**
@@ -124,7 +131,7 @@ class SessionManager
         {
             $data = $this->unserialize($data);
             foreach ($data as $k=>$v) {
-                $_SESSION[$k] = $v;
+                $this->set($k, $v);
             }
         }
 
@@ -212,10 +219,10 @@ class SessionManager
     public function get(string $k, $default = "")
     {
         if (isset($this->session[$k])) {
-            return $this->session[$k];
+            return $this->fromValue($this->session[$k]);
         }
         if (is_array($_SESSION) && isset($_SESSION[$k])) {
-            return $_SESSION[$k];
+            return $this->fromValue($_SESSION[$k]);
         }
         return $default;
     }
