@@ -461,13 +461,18 @@ class SessionManager
     public function isLogin(): bool {return sizeof($this->getData()) ? true : false;}
 
     public function getData(): array {
-        $sessionId = session_id();
-        $data = $this->read($sessionId);
+        if ($this->db) {
+            $sessionId = session_id();
+            $data = $this->read($sessionId);
+        }
+        else {
+            $data = $this->read("");
+        }
         if (is_array($data) && isset($data[$this->fld_session_data]) && isset($data[$this->login_user_id])) {
             if (is_string($data[$this->fld_session_data])) {
                 $data[$this->fld_session_data] = json_decode($data[$this->fld_session_data], true);
             }
-            if ($data[$this->fld_session_data][$this->fld_id] === $data[$this->login_user_id]) {
+            if ((int)$data[$this->fld_session_data][$this->fld_id] === (int)$data[$this->login_user_id]) {
                 return $data;
             }
         }
