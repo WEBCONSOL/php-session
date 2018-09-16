@@ -38,29 +38,32 @@ class Authenticator implements AuthenticationAdapter
     }
 
     public function logout($idOrUsername, SessionManager $sessionManager): bool {
-        $userData = null;
-        if (!$idOrUsername) {
-            $userData = $sessionManager->get(WC_SESSION_DATA_KEY, new UserModel(array()));
-        }
-        else if (is_numeric($idOrUsername)) {
-            $uid = (int)$sessionManager->get(WC_SESSION_LOGIN_KEY, 0);
-            if ($uid === (int)$idOrUsername) {
+        if ($this->isLogin($sessionManager)) {
+            $userData = null;
+            if (!$idOrUsername) {
                 $userData = $sessionManager->get(WC_SESSION_DATA_KEY, new UserModel(array()));
             }
-        }
-        else if (is_string($idOrUsername)) {
-            $userData = $sessionManager->get(WC_SESSION_DATA_KEY, new UserModel(array()));
-            if (!($userData instanceof UserModel) || $userData->getUserName() !== $idOrUsername) {
-                $userData = null;
+            else if (is_numeric($idOrUsername)) {
+                $uid = (int)$sessionManager->get(WC_SESSION_LOGIN_KEY, 0);
+                if ($uid === (int)$idOrUsername) {
+                    $userData = $sessionManager->get(WC_SESSION_DATA_KEY, new UserModel(array()));
+                }
             }
+            else if (is_string($idOrUsername)) {
+                $userData = $sessionManager->get(WC_SESSION_DATA_KEY, new UserModel(array()));
+                if (!($userData instanceof UserModel) || $userData->getUserName() !== $idOrUsername) {
+                    $userData = null;
+                }
+            }
+            if (!($userData instanceof UserModel) || ($userData instanceof UserModel && $userData->isNotEmpty())) {
+                $sessionManager->delete(WC_SESSION_LOGIN_KEY);
+                $sessionManager->delete(WC_SESSION_DATA_KEY);
+                setcookie(WC_SESSION_LOGIN_KEY, 0, -1);
+                return true;
+            }
+            return false;
         }
-        if (!($userData instanceof UserModel) || ($userData instanceof UserModel && $userData->isNotEmpty())) {
-            $sessionManager->delete(WC_SESSION_LOGIN_KEY);
-            $sessionManager->delete(WC_SESSION_DATA_KEY);
-            setcookie(WC_SESSION_LOGIN_KEY, 0, -1);
-            return true;
-        }
-        return false;
+        return true;
     }
 
     public function isLogin(SessionManager $sessionManager): bool {
