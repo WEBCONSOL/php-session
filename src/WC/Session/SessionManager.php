@@ -33,6 +33,8 @@ final class SessionManager
 
     public function logout($idOrUsername=null): bool {return self::$authenticator->logout($idOrUsername, $this);}
 
+    public function getSessionUserData(): UserModel {return $this->get(WC_SESSION_DATA_KEY, new UserModel(array()));}
+
     private function start() {
         include __DIR__ . "/constants.php";
         self::$adapter->start(WC_SESSION_ID, WC_SESSION_LIFETIME);
