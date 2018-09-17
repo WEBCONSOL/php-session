@@ -30,7 +30,7 @@ final class UserGroup
             foreach ($groups as $i=>$group) {
                 $groups[$i] = new GroupModel($group);
                 $permissions = self::getGroupPermissions((int)$groups[$i]->getId(), $em);
-                $groups[$i]->set('permissions', $permissions);
+                $groups[$i]->set('permissions', new PermissionsModel($permissions));
                 self::recursivelyFetchGroupGroups($groups[$i], $em);
                 $groupsModel->add($groups[$i]);
             }
@@ -67,6 +67,8 @@ final class UserGroup
         return $em->loadResults($q);
     }
 
+    public static function calculatePermissions(UserModel &$userModel) {PermissionsCalculator::calculate($userModel);}
+
     private static function recursivelyFetchGroupGroups(GroupModel &$groupModel, &$em) {
         $groups = self::getGroupGroups((int)$groupModel->getId(), $em);
         $groupsModel = new GroupsModel(array());
@@ -74,7 +76,7 @@ final class UserGroup
             foreach ($groups as $i=>$group) {
                 $groups[$i] = new GroupModel($group);
                 $permissions = self::getGroupPermissions((int)$groups[$i]->getId(), $em);
-                $groups[$i]->set('permissions', $permissions);
+                $groups[$i]->set('permissions', new PermissionsModel($permissions));
                 self::recursivelyFetchGroupGroups($groups[$i], $em);
                 $groupsModel->add($groups[$i]);
             }
