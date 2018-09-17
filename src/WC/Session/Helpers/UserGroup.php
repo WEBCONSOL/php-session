@@ -73,6 +73,8 @@ final class UserGroup
         if (sizeof($groups)) {
             foreach ($groups as $i=>$group) {
                 $groups[$i] = new GroupModel($group);
+                $permissions = self::getGroupPermissions((int)$groups[$i]->getId(), $em);
+                $groups[$i]->set('permissions', $permissions);
                 self::recursivelyFetchGroupGroups($groups[$i], $em);
                 $groupsModel->add($groups[$i]);
             }
