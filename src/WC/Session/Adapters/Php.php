@@ -8,6 +8,13 @@ use WC\Session\SessionManagerAdapter;
 
 final class Php implements SessionManagerAdapter
 {
+    private $id = '';
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
     public function delete(string $key)
     {
         $session = $this->getRoot();
@@ -51,7 +58,11 @@ final class Php implements SessionManagerAdapter
     public function start(string $sid, int $lifetime)
     {
         if ($sid) {
+            $this->id = $sid;
             session_id($sid);
+        }
+        else {
+            $this->id = session_id();
         }
         session_start();
         $session = $this->getRoot();

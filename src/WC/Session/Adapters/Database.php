@@ -8,10 +8,16 @@ use WC\Session\SessionManagerAdapter;
 class Database implements SessionManagerAdapter
 {
     private $em = null;
+    private $id = '';
 
     public function __construct(Driver $em)
     {
         $this->em = $em;
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 
     public function start(string $sid, int $lifetime)

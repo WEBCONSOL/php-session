@@ -19,6 +19,8 @@ final class SessionManager
         }
     }
 
+    public function getId() {return self::$adapter->getId();}
+
     public function delete(string $key){self::$adapter->delete($key);}
 
     public function destroy(){self::$adapter->destroy();}

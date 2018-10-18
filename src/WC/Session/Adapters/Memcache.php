@@ -6,8 +6,15 @@ use WC\Session\SessionManagerAdapter;
 
 class Memcache implements SessionManagerAdapter
 {
+    private $id = '';
+
     public function __construct()
     {
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 
     public function start(string $sid, int $lifetime)
