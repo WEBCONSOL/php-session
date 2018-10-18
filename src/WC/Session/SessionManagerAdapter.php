@@ -4,6 +4,8 @@ namespace WC\Session;
 
 interface SessionManagerAdapter
 {
+    public function getId();
+
     public function delete(string $key);
 
     public function destroy();
