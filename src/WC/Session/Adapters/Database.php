@@ -2,7 +2,7 @@
 
 namespace WC\Session\Adapters;
 
-use Database\Driver;
+use WC\Database\Driver;
 use WC\Session\SessionManagerAdapter;
 
 class Database implements SessionManagerAdapter

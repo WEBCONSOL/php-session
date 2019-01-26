@@ -2,7 +2,7 @@
 
 namespace WC\Session;
 
-use Database\Driver;
+use WC\Database\Driver;
 use WC\Models\UserModel;
 
 interface AuthenticationAdapter

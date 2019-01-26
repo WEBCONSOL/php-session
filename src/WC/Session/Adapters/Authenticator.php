@@ -2,7 +2,7 @@
 
 namespace WC\Session\Adapters;
 
-use Database\Driver;
+use WC\Database\Driver;
 use WC\Models\UserModel;
 use WC\Session\AuthenticationAdapter;
 use WC\Session\Helpers\UserGroup;

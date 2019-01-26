@@ -2,7 +2,7 @@
 
 namespace WC\Session\Helpers;
 
-use Database\Driver;
+use WC\Database\Driver;
 use WC\Models\GroupModel;
 use WC\Models\GroupsModel;
 use WC\Models\PermissionsModel;
