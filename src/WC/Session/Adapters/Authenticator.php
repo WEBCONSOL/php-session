@@ -2,7 +2,7 @@
 
 namespace WC\Session\Adapters;
 
-use WC\Database\Driver;
+use Doctrine\ORM\EntityManager;
 use WC\Models\UserModel;
 use WC\Session\AuthenticationAdapter;
 use WC\Session\Helpers\UserGroup;
@@ -13,7 +13,7 @@ class Authenticator implements AuthenticationAdapter
     private $em;
     private $config;
 
-    public function __construct(Driver &$em, array $config=array()) {
+    public function __construct(EntityManager &$em, array $config=array()) {
         $this->em =& $em;
         $this->config = $config;
     }

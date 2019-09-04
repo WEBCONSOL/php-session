@@ -2,15 +2,16 @@
 
 namespace WC\Session\Adapters;
 
-use WC\Database\Driver;
+use Doctrine\ORM\EntityManager;
 use WC\Session\SessionManagerAdapter;
 
 class Database implements SessionManagerAdapter
 {
+    public static $TB_NAME = 'sessions';
     private $em = null;
     private $id = '';
 
-    public function __construct(Driver $em)
+    public function __construct(EntityManager &$em)
     {
         $this->em = $em;
     }
@@ -22,7 +23,7 @@ class Database implements SessionManagerAdapter
 
     public function start(string $sid, int $lifetime)
     {
-        // TODO: Implement start() method.
+        $query = '';
     }
 
     public function set(string $key, $value)
